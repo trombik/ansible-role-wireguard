@@ -3,4 +3,24 @@
   roles:
     - ansible-role-wireguard
   vars:
-    wireguard_config: ""
+    # XXX note that the role does not handle routing, pf(4), sysctl.conf(5), etc.
+
+    # openssl rand -base64 32
+    client_pub: VtsiDVbjJUipmEdApgf0KpMSDW5cCzZ/GDej0n9VT0c=
+    private_key_wg0: LggCy5zq4Cmy7Fw4gPsudesTcKb36KW7GeBEEQSJ6ZI=
+    private_key_wg1: OsV/ZUQscDUYsnjwY70zDL/sTZQVXGe9EtbwZnpEvro=
+    wireguard_interfaces:
+      - name: wg0
+        key: "{{ private_key_wg0 }}"
+        config: |
+          wgkey {{ private_key_wg0 }} wgport 51820
+          inet 172.16.99.254 255.255.255.0
+          wgpeer {{ client_pub }} \
+                  wgaip 172.16.99.100
+      - name: wg1
+        key: "{{ private_key_wg1 }}"
+        config: |
+          wgkey {{ private_key_wg1 }} wgport 51820
+          inet 172.16.100.254 255.255.255.0
+          wgpeer {{ client_pub }} \
+                  wgaip 172.16.100.100

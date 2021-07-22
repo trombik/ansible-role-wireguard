@@ -1,4 +1,4 @@
-# ansible-role-wireguard
+# `trombik.wireguard`
 
 A brief description of the role goes here.
 

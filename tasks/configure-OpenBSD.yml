@@ -1,0 +1,7 @@
+---
+
+- name: Configure wg(4) interfaces
+  include_tasks: configure-OpenBSD-interface.yml
+  loop: "{{ wireguard_interfaces }}"
+  loop_control:
+    loop_var: __interface

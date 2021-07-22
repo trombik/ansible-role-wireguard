@@ -1,0 +1,15 @@
+---
+
+- name: Configure wg(4) interfaces
+  block:
+    - name: "Create /etc/hostname.wg(5) for {{ __interface['name'] }}"
+      template:
+        dest: "/etc/hostname.{{ __interface['name'] }}"
+        src: hostname.5.j2
+        mode: 0640
+      register: __create_etc_hostname_wg5
+
+    - name: "Create wg(5) for {{ __interface['name'] }}"
+      command: "sh /etc/netstart {{__interface['name'] }}"
+      when:
+        - __create_etc_hostname_wg5.changed

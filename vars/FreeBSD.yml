@@ -1,3 +1,0 @@
----
-__wireguard_db_dir: /var/db/wireguard
-__wireguard_conf_dir: /usr/local/etc/wireguard

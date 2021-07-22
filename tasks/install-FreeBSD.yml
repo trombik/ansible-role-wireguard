@@ -1,0 +1,6 @@
+---
+
+- name: Install wireguard
+  pkgng:
+    name: wireguard
+    state: present

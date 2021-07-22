@@ -1,0 +1,9 @@
+---
+wireguard_user: wireguard
+wireguard_group: wireguard
+wireguard_log_dir: /var/log/wireguard
+wireguard_db_dir: "{{ __wireguard_db_dir }}"
+wireguard_service: wireguard
+wireguard_conf_dir: "{{ __wireguard_conf_dir }}"
+wireguard_conf_file: "{{ __wireguard_conf_dir }}/wireguard.conf"
+wireguard_flags: ""

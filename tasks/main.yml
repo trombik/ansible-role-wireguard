@@ -1,0 +1,37 @@
+---
+# tasks file for ansible-role-wireguard
+
+- include_vars: "{{ ansible_os_family }}.yml"
+
+- include: "install-{{ ansible_os_family }}.yml"
+
+- name: Create log directory
+  file:
+    path: "{{ wireguard_log_dir }}"
+    mode: 0755
+    owner: "{{ wireguard_user }}"
+    group: "{{ wireguard_group }}"
+    state: directory
+  notify: Restart wireguard
+
+- name: Create db directory
+  file:
+    path: "{{ wireguard_db_dir }}"
+    mode: 0755
+    owner: "{{ wireguard_user }}"
+    group: "{{ wireguard_group }}"
+    state: directory
+  notify: Restart wireguard
+
+- name: Create wireguard.conf
+  template:
+    src: wireguard.conf.j2
+    dest: "{{ wireguard_conf_file }}"
+    validate: echo %s
+  notify: Restart wireguard
+
+- name: Start wireguard
+  service:
+    name: "{{ wireguard_service }}"
+    enabled: true
+    state: started
